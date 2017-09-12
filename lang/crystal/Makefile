@@ -1,46 +1,44 @@
 # $OpenBSD: Makefile.template,v 1.75 2016/03/20 17:19:49 naddy Exp $
 
-# Reasons why the port/package shouldn't be built
-#
-ONLY_FOR_ARCHS       = amd64
+ONLY_FOR_ARCHS			  = amd64
 
-#                      |----------------------------------------------------------|
-COMMENT              = A Ruby-like, statically typed, object oriented, language.
+#							|----------------------------------------------------------|
+COMMENT					  = A Ruby-like, statically typed, object oriented, language.
 
-VERSION              = 0.23.1
-DISTNAME             = crystal-${VERSION}
-PKGNAME              = crystal-${VERSION}
+VERSION					  = 0.23.1
+DISTNAME				  = crystal-${VERSION}
+PKGNAME					  = crystal-${VERSION}
 
-CATEGORIES           = lang
-HOMEPAGE             = https://crystal-lang.org/
-MAINTAINER           = Chris Huxtable <chris@bitfliplabs.com>
+CATEGORIES				  = lang
+HOMEPAGE				  = https://crystal-lang.org/
+MAINTAINER				  = Chris Huxtable <chris@bitfliplabs.com>
 
 # Apache License, v2.0
-PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP   = Yes
-PERMIT_DISTFILES_FTP = Yes
+PERMIT_PACKAGE_CDROM	  = Yes
+PERMIT_PACKAGE_FTP		  = Yes
+PERMIT_DISTFILES_FTP	  = Yes
 
-WANTLIB             += c event_core event_extra gc iconv m pcre pthread z
+WANTLIB					 += c event_core event_extra gc iconv m pcre pthread z
 
-MASTER_SITES         = https://github.com/crystal-lang/crystal/archive/
-MASTER_SITES0        = https://assets.bitfliplabs.com/crystal/archive/
-DISTFILES            = ${VERSION}.tar.gz \
-                       crystal-${VERSION}-${MACHINE_ARCH}-openbsd61.tar.gz:0
+MASTER_SITES			  = https://github.com/crystal-lang/crystal/archive/
+MASTER_SITES0			  = https://assets.bitfliplabs.com/crystal/archive/
+DISTFILES				  = ${VERSION}.tar.gz \
+							crystal-${VERSION}-${MACHINE_ARCH}-openbsd61.tar.gz:0 \
 
-NO_CONFIGURE         = Yes
-USE_GMAKE            = Yes
+NO_CONFIGURE			  = Yes
+USE_GMAKE				  = Yes
 
-LIB_DEPENDS          = converters/libiconv \
-                       devel/boehm-gc \
-                       devel/libevent2 \
-                       devel/pcre
+LIB_DEPENDS				  = converters/libiconv \
+							devel/boehm-gc \
+							devel/libevent2 \
+							devel/pcre \
 
-BUILD_DEPENDS        = shells/bash
-RUN_DEPENDS          = shells/bash
+BUILD_DEPENDS			  = shells/bash
+RUN_DEPENDS				  = shells/bash
 
-MODULES              = lang/clang
-MODCLANG_ARCHS       = amd64
-MODCLANG_LANGS       = c c++
+MODULES					  = lang/clang
+MODCLANG_ARCHS			  = amd64
+MODCLANG_LANGS			  = c c++
 
 do-build:
 	clang++ -c -o ${WRKSRC}/src/llvm/ext/llvm_ext.o ${WRKSRC}/src/llvm/ext/llvm_ext.cc `llvm-config --cxxflags`
