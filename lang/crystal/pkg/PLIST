@@ -1,5 +1,6 @@
 @comment $OpenBSD$
 bin/crystal
+@bin bin/shards
 lib/crystal/
 lib/crystal/bin/
 @bin lib/crystal/bin/crystal

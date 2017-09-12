@@ -6,6 +6,7 @@ ONLY_FOR_ARCHS			  = amd64
 COMMENT					  = A Ruby-like, statically typed, object oriented, language.
 
 VERSION					  = 0.23.1
+VERSION_SHARDS			  = 0.7.1
 DISTNAME				  = crystal-${VERSION}
 PKGNAME					  = crystal-${VERSION}
 
@@ -22,8 +23,10 @@ WANTLIB					 += c event_core event_extra gc iconv m pcre pthread z
 
 MASTER_SITES			  = https://github.com/crystal-lang/crystal/archive/
 MASTER_SITES0			  = https://assets.bitfliplabs.com/crystal/archive/
+MASTER_SITES1			  = https://github.com/crystal-lang/shards/archive/
 DISTFILES				  = ${VERSION}.tar.gz \
 							crystal-${VERSION}-${MACHINE_ARCH}-openbsd61.tar.gz:0 \
+							v${VERSION_SHARDS}.tar.gz:1
 
 NO_CONFIGURE			  = Yes
 USE_GMAKE				  = Yes
@@ -32,6 +35,7 @@ LIB_DEPENDS				  = converters/libiconv \
 							devel/boehm-gc \
 							devel/libevent2 \
 							devel/pcre \
+							devel/libyaml			# Required for Shards
 
 BUILD_DEPENDS			  = shells/bash
 RUN_DEPENDS				  = shells/bash
@@ -49,6 +53,8 @@ do-build:
 
 	cd ${WRKSRC} && gmake deps && CC=clang gmake
 
+	cd ${WRKSRC}/../shards-${VERSION_SHARDS} && CRYSTAL_BIN=${WRKSRC}/.build/crystal gmake release
+
 do-install:
 	${INSTALL_DATA} ${FILESDIR}/crystal ${WRKSRC}
 	${SUBST_CMD} ${WRKSRC}/crystal
@@ -56,6 +62,7 @@ do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/crystal
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/crystal/bin
 	${INSTALL_PROGRAM} ${WRKSRC}/.build/crystal ${PREFIX}/lib/crystal/bin
+	${INSTALL_PROGRAM} ${WRKSRC}/../shards-${VERSION_SHARDS}/bin/shards ${PREFIX}/bin
 	cp -R ${WRKSRC}/src/ ${PREFIX}/lib/crystal/src/
 
 .include <bsd.port.mk>
