@@ -56,13 +56,11 @@ do-build:
 	cd ${WRKSRC}/../shards-${VERSION_SHARDS} && CRYSTAL_BIN=${WRKSRC}/.build/crystal gmake release
 
 do-install:
-	${INSTALL_DATA} ${FILESDIR}/crystal ${WRKSRC}
-	${SUBST_CMD} ${WRKSRC}/crystal
-	${INSTALL_SCRIPT} ${WRKSRC}/crystal ${PREFIX}/bin
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/crystal
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/crystal/bin
 	${INSTALL_PROGRAM} ${WRKSRC}/.build/crystal ${PREFIX}/lib/crystal/bin
 	${INSTALL_PROGRAM} ${WRKSRC}/../shards-${VERSION_SHARDS}/bin/shards ${PREFIX}/bin
 	cp -R ${WRKSRC}/src/ ${PREFIX}/lib/crystal/src/
+	ln -s ${PREFIX}/lib/crystal/bin/crystal ${PREFIX}/bin/crystal
 
 .include <bsd.port.mk>
