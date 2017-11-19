@@ -34,33 +34,35 @@ USE_GMAKE				  = Yes
 LIB_DEPENDS				  = converters/libiconv \
 							devel/boehm-gc \
 							devel/libevent2 \
+							devel/llvm \
 							devel/pcre \
 							devel/libyaml			# Required for Shards
 
 BUILD_DEPENDS			  = shells/bash
 RUN_DEPENDS				  = shells/bash
 
-MODULES					  = lang/clang
-MODCLANG_ARCHS			  = amd64
-MODCLANG_LANGS			  = c c++
+CRYSTAL_CC				  = clang-5.0
+
 
 do-build:
-	clang++ -c -o ${WRKSRC}/src/llvm/ext/llvm_ext.o ${WRKSRC}/src/llvm/ext/llvm_ext.cc `llvm-config --cxxflags`
-	clang -c -o ${WRKSRC}/src/ext/sigfault.o ${WRKSRC}/src/ext/sigfault.c `llvm-config --cflags`
+	${CRYSTAL_CC} -c -o ${WRKSRC}/src/llvm/ext/llvm_ext.o ${WRKSRC}/src/llvm/ext/llvm_ext.cc `llvm-config --cxxflags`
+	${CRYSTAL_CC} -c -o ${WRKSRC}/src/ext/sigfault.o ${WRKSRC}/src/ext/sigfault.c `llvm-config --cflags`
 
 	mkdir ${WRKSRC}/.build
-	clang++ ${WRKSRC}/../crystal-${VERSION}-${MACHINE_ARCH}-openbsd61.o -o ${WRKSRC}/.build/crystal -rdynamic ${WRKSRC}/src/ext/sigfault.o ${WRKSRC}/src/llvm/ext/llvm_ext.o `(llvm-config --libs --system-libs --ldflags 2> /dev/null)` -lstdc++ -lpcre -lgc -lpthread -levent_core -levent_extra -lssl -liconv
+	${CRYSTAL_CC} ${WRKSRC}/../crystal-${VERSION}-${MACHINE_ARCH}-openbsd61.o -o ${WRKSRC}/.build/crystal -rdynamic ${WRKSRC}/src/ext/sigfault.o ${WRKSRC}/src/llvm/ext/llvm_ext.o `(llvm-config --libs --system-libs --ldflags 2> /dev/null)` -lstdc++ -lpcre -lgc -lpthread -levent_core -levent_extra -lssl -liconv
 
-	cd ${WRKSRC} && gmake deps && CC=clang gmake
+	cd ${WRKSRC} && gmake deps && gmake release=1 CC=${CRYSTAL_CC}  CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
 
 	cd ${WRKSRC}/../shards-${VERSION_SHARDS} && CRYSTAL_BIN=${WRKSRC}/.build/crystal gmake release
 
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/crystal
-	${INSTALL_DATA_DIR} ${PREFIX}/lib/crystal/bin
-	${INSTALL_PROGRAM} ${WRKSRC}/.build/crystal ${PREFIX}/lib/crystal/bin
+
+	# Crystal
+	${INSTALL_PROGRAM} ${WRKSRC}/.build/crystal ${PREFIX}/bin
+	cp -R ${WRKSRC}/src/* ${PREFIX}/lib/crystal/.
+
+	# Shards
 	${INSTALL_PROGRAM} ${WRKSRC}/../shards-${VERSION_SHARDS}/bin/shards ${PREFIX}/bin
-	cp -R ${WRKSRC}/src/ ${PREFIX}/lib/crystal/src/
-	ln -s ${PREFIX}/lib/crystal/bin/crystal ${PREFIX}/bin/crystal
 
 .include <bsd.port.mk>
