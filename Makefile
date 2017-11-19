@@ -51,8 +51,8 @@ do-build:
 	# Crystal
 	mkdir ${WRKSRC}/.build
 	${CRYSTAL_CC} ${WRKSRC}/../crystal-${VERSION}-${MACHINE_ARCH}-openbsd61.o -o ${WRKSRC}/.build/crystal -rdynamic ${WRKSRC}/src/ext/sigfault.o ${WRKSRC}/src/llvm/ext/llvm_ext.o `(llvm-config --libs --system-libs --ldflags 2> /dev/null)` -lstdc++ -lpcre -lgc -lpthread -levent_core -levent_extra -lssl -liconv
-
-	cd ${WRKSRC} && gmake deps && gmake release=1 CC=${CRYSTAL_CC}  CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
+	#cd ${WRKSRC} && gmake deps && gmake release=1 CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
+	cd ${WRKSRC} && gmake deps && gmake CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
 
 	# Shards
 	cd ${WRKSRC}/../shards-${VERSION_SHARDS} && CRYSTAL_BIN=${WRKSRC}/.build/crystal gmake release
