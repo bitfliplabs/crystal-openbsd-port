@@ -41,7 +41,7 @@ LIB_DEPENDS				  = converters/libiconv \
 BUILD_DEPENDS			  = shells/bash
 RUN_DEPENDS				  = shells/bash
 
-CRYSTAL_CC				  = clang-5.0
+CRYSTAL_CC				  = clang-4.0
 
 
 do-build:
