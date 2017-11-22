@@ -5,8 +5,9 @@ ONLY_FOR_ARCHS			  = amd64
 #							|----------------------------------------------------------|
 COMMENT					  = A Ruby-like, statically typed, object oriented, language.
 
-VERSION					  = 0.23.1
-VERSION_SHARDS			  = 0.7.1
+VERSION					  = 0.24.0
+VERSION_SHARDS			  = 0.7.2
+OS_VERSION				  = openbsd62
 DISTNAME				  = crystal-${VERSION}
 PKGNAME					  = crystal-${VERSION}
 
@@ -25,7 +26,7 @@ MASTER_SITES			  = https://github.com/crystal-lang/crystal/archive/
 MASTER_SITES0			  = https://assets.bitfliplabs.com/crystal/archive/
 MASTER_SITES1			  = https://github.com/crystal-lang/shards/archive/
 DISTFILES				  = ${VERSION}.tar.gz \
-							crystal-${VERSION}-${MACHINE_ARCH}-openbsd61.tar.gz:0 \
+							crystal-${VERSION}-${MACHINE_ARCH}-${OS_VERSION}.tar.gz:0 \
 							v${VERSION_SHARDS}.tar.gz:1
 
 NO_CONFIGURE			  = Yes
@@ -41,18 +42,26 @@ LIB_DEPENDS				  = converters/libiconv \
 BUILD_DEPENDS			  = shells/bash
 RUN_DEPENDS				  = shells/bash
 
-CRYSTAL_CC				  = clang-4.0
+
+# Variables
+CRYSTAL_CC				  = clang-5.0
+CRYSTAL_COMPILER		  = ${WRKSRC}/.build/crystal
+CRYSTAL_OBJECT			  = ${WRKSRC}/../crystal-${VERSION}-${MACHINE_ARCH}-${OS_VERSION}.o
+
+LLVMEXT_SRC				  = ${WRKSRC}/src/llvm/ext/llvm_ext
+SIGFAULT_SRC			  = ${WRKSRC}/src/ext/sigfault
 
 
 do-build:
-	${CRYSTAL_CC} -c -o ${WRKSRC}/src/llvm/ext/llvm_ext.o ${WRKSRC}/src/llvm/ext/llvm_ext.cc `llvm-config --cxxflags`
-	${CRYSTAL_CC} -c -o ${WRKSRC}/src/ext/sigfault.o ${WRKSRC}/src/ext/sigfault.c
+	${CRYSTAL_CC} -c -o ${LLVMEXT_SRC}.o ${LLVMEXT_SRC}.cc `llvm-config --cxxflags`
+	${CRYSTAL_CC} -c -o ${SIGFAULT_SRC}.o ${SIGFAULT_SRC}.c
 
 	# Crystal
-	mkdir ${WRKSRC}/.build
-	${CRYSTAL_CC} ${WRKSRC}/../crystal-${VERSION}-${MACHINE_ARCH}-openbsd61.o -o ${WRKSRC}/.build/crystal -rdynamic ${WRKSRC}/src/ext/sigfault.o ${WRKSRC}/src/llvm/ext/llvm_ext.o `(llvm-config --libs --system-libs --ldflags 2> /dev/null)` -lstdc++ -lpcre -lgc -lpthread -levent_core -levent_extra -lssl -liconv
-	cd ${WRKSRC} && gmake deps && gmake release=1 CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
-	#cd ${WRKSRC} && gmake deps && gmake CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
+	mkdir -p ${WRKSRC}/.build
+
+	${CRYSTAL_CC} ${CRYSTAL_OBJECT} -o ${CRYSTAL_COMPILER} -rdynamic ${SIGFAULT_SRC}.o ${LLVMEXT_SRC}.o `(llvm-config --libs --system-libs --ldflags 2> /dev/null)` -lstdc++ -lpcre -lgc -lpthread -levent_core -levent_extra -lssl -liconv
+	#cd ${WRKSRC} && gmake deps && gmake release=1 CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
+	cd ${WRKSRC} && gmake deps && gmake CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
 
 	# Shards
 	cd ${WRKSRC}/../shards-${VERSION_SHARDS} && CRYSTAL_BIN=${WRKSRC}/.build/crystal gmake release
