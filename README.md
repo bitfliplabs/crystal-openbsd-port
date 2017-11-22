@@ -1,6 +1,6 @@
 # Crystal OpenBSD Port
 
-OpenBSD port of `crystal`; a Ruby-like, statically typed, object oriented, language. This port also includes `shards` a dependancy manager for `crystal`.
+OpenBSD port of [crystal](https://github.com/crystal-lang/crystal); a Ruby-like, statically typed, object oriented, language. This port also includes [shards](https://github.com/crystal-lang/shards) a dependancy manager for Crystal.
 
 
 ## Setup:
