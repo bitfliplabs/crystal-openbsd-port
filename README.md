@@ -32,7 +32,7 @@ make package
 - [Manual for ports](https://man.openbsd.org/ports)
 - [Manual for bsd.port.mk](https://man.openbsd.org/bsd.port.mk)
 - [Porters Handbook](https://www.openbsd.org/faq/ports/index.html)
-
+- [Fetch Ports](https://www.openbsd.org/faq/ports/ports.html#PortsFetch)
 
 ## Cross Compiling
 
