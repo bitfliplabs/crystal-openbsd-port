@@ -44,3 +44,10 @@ mv crystal.o crystal-0.24.0-amd64-openbsd62.o
 tar -cvf crystal-0.24.0-amd64-openbsd62.tar crystal-0.24.0-amd64-openbsd62.o 
 gzip -9 crystal-0.24.0-amd64-openbsd62.tar
 ```
+
+## Dependencies:
+
+```
+pkg_add bash libiconv boehm-gc libevent llvm pcre libyaml
+```
+
