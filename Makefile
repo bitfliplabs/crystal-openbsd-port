@@ -60,8 +60,7 @@ do-build:
 	mkdir -p ${WRKSRC}/.build
 
 	${CRYSTAL_CC} ${CRYSTAL_OBJECT} -o ${CRYSTAL_COMPILER} -rdynamic ${SIGFAULT_SRC}.o ${LLVMEXT_SRC}.o `(llvm-config --libs --system-libs --ldflags 2> /dev/null)` -lstdc++ -lpcre -lgc -lpthread -levent_core -levent_extra -lssl -liconv
-	#cd ${WRKSRC} && gmake deps && gmake release=1 CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
-	cd ${WRKSRC} && gmake deps && gmake CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
+	cd ${WRKSRC} && gmake deps && gmake release=1 CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
 
 	# Shards
 	cd ${WRKSRC}/../shards-${VERSION_SHARDS} && CRYSTAL_BIN=${WRKSRC}/.build/crystal gmake release
