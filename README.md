@@ -1,5 +1,7 @@
 # Crystal OpenBSD Port
 
+OpenBSD port of `crystal`; a Ruby-like, statically typed, object oriented, language.
+
 ## Setup:
 
 ```
