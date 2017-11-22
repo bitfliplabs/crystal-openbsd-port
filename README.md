@@ -1,10 +1,9 @@
 # Crystal OpenBSD Port
-
 OpenBSD port of [crystal](https://github.com/crystal-lang/crystal); a Ruby-like, statically typed, object oriented, language. This port also includes [shards](https://github.com/crystal-lang/shards) a dependancy manager for Crystal.
 
 
 ## Setup:
-
+On OpenBSD [with ports installed ](https://www.openbsd.org/faq/ports/ports.html#PortsFetch):
 ```
 cd /usr/ports/lang
 git clone https://github.com/bitfliplabs/crystal-port.git crystal
@@ -12,8 +11,14 @@ cd crystal
 ```
 
 
-## Cross Compiling
+## Dependencies:
+Easier and faster to add from ports then by compilation:
+```
+pkg_add bash gmake libiconv boehm-gc libevent llvm pcre libyaml
+```
 
+## Cross Compiling
+On MacOS/Linux:
 ```
 cd root/dir/of/crystal/
 make clean && make
@@ -24,16 +29,7 @@ gzip -9 crystal-0.24.0-amd64-openbsd62.tar
 ```
 
 
-## Dependencies:
-
-```
-pkg_add bash gmake libiconv boehm-gc libevent llvm pcre libyaml
-```
-
-
 ## Help:
-
 - [Manual for ports](https://man.openbsd.org/ports)
 - [Manual for bsd.port.mk](https://man.openbsd.org/bsd.port.mk)
 - [Porters Handbook](https://www.openbsd.org/faq/ports/index.html)
-- [Fetch Ports](https://www.openbsd.org/faq/ports/ports.html#PortsFetch)
