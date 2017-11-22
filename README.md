@@ -48,6 +48,6 @@ gzip -9 crystal-0.24.0-amd64-openbsd62.tar
 ## Dependencies:
 
 ```
-pkg_add bash libiconv boehm-gc libevent llvm pcre libyaml
+pkg_add bash gmake libiconv boehm-gc libevent llvm pcre libyaml
 ```
 
