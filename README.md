@@ -1,4 +1,4 @@
-# crystal-openbsd-port
+# Crystal OpenBSD Port
 
 ## Setup:
 
