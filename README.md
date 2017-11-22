@@ -1,6 +1,7 @@
 # Crystal OpenBSD Port
 
-OpenBSD port of `crystal`; a Ruby-like, statically typed, object oriented, language.
+OpenBSD port of `crystal`; a Ruby-like, statically typed, object oriented, language. This port also includes `shards` a dependancy manager for `crystal`.
+
 
 ## Setup:
 
@@ -16,7 +17,7 @@ cd crystal
 ```
 cd root/dir/of/crystal/
 make clean && make
-.build/crystal build --release --stats --cross-compile --target "amd64-unknown-openbsd" -D without_openssl -D without_zlib -D i_know_what_im_doing src/compiler/crystal.cr
+.build/crystal build --release --cross-compile --target "amd64-unknown-openbsd6.2" -D i_know_what_im_doing src/compiler/crystal.cr
 mv crystal.o crystal-0.24.0-amd64-openbsd62.o
 tar -cvf crystal-0.24.0-amd64-openbsd62.tar crystal-0.24.0-amd64-openbsd62.o
 gzip -9 crystal-0.24.0-amd64-openbsd62.tar
