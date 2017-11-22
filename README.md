@@ -4,27 +4,8 @@
 
 ```
 cd /usr/ports/lang
-git clone https://github.com/bitfliplabs/crystal-openbsd-port.git crystal
+git clone https://github.com/bitfliplabs/crystal-port.git crystal
 cd crystal
-```
-
-## Building:
-```
-make build
-```
-
-## Cleaning:
-```
-make clean
-make clean=all
-make clean=depends
-make clean=dist
-make clean=packages
-```
-
-## Packaging:
-```
-make package
 ```
 
 # Help:
