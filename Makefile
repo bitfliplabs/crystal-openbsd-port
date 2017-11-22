@@ -52,17 +52,14 @@ do-build:
 	${CRYSTAL_CC} -c -o ${LLVMEXT_SRC}.o ${LLVMEXT_SRC}.cc `llvm-config --cxxflags`
 	${CRYSTAL_CC} -c -o ${SIGFAULT_SRC}.o ${SIGFAULT_SRC}.c
 
-	# Crystal
 	mkdir -p ${WRKSRC}/.build
 
 	${CRYSTAL_CC} ${CRYSTAL_OBJECT} -o ${CRYSTAL_COMPILER} -rdynamic ${SIGFAULT_SRC}.o ${LLVMEXT_SRC}.o `(llvm-config --libs --system-libs --ldflags 2> /dev/null)` -lstdc++ -lpcre -lgc -lpthread -levent_core -levent_extra -lssl -liconv
 	cd ${WRKSRC} && gmake deps && gmake release=1 CC=${CRYSTAL_CC} CRYSTAL_CONFIG_PATH="lib:/usr/local/lib/crystal"
 
 do-install:
-	# Library
 	${INSTALL_DATA_DIR} ${PREFIX}/lib/crystal
 
-	# Crystal
 	${INSTALL_PROGRAM} ${WRKSRC}/.build/crystal ${PREFIX}/bin
 	cp -R ${WRKSRC}/src/* ${PREFIX}/lib/crystal/.
 
