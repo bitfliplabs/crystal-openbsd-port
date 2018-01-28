@@ -24,9 +24,9 @@ DISTFILES				 = v${V}.tar.gz \
 						   v${V}-openbsd.tar.gz:0 \
 						   v${V_SHARDS}.tar.gz:1
 
-COMPILER				 =	base-clang ports-clang
+COMPILER				 = base-clang ports-clang
 
-BUILD_DEPENDS			 =	devel/llvm
+BUILD_DEPENDS			 = devel/llvm
 
 NO_CONFIGURE			 = Yes
 
