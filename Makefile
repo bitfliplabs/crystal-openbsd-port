@@ -26,17 +26,14 @@ DISTFILES				 = v${V}.tar.gz \
 
 COMPILER				 = base-clang ports-clang
 
-BUILD_DEPENDS			 = devel/llvm
-
 NO_CONFIGURE			 = Yes
 
 LIB_DEPENDS				 = converters/libiconv \
 						   devel/boehm-gc \
 						   devel/libevent2 \
+						   devel/llvm \
 						   devel/pcre \
 						   devel/libyaml
-
-RUN_DEPENDS				 = devel/llvm
 
 USE_GMAKE				 = Yes
 
