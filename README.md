@@ -3,7 +3,7 @@ OpenBSD port of [crystal](https://github.com/crystal-lang/crystal); a Ruby-like,
 
 ## Pre-Built:
 ```
-pkg_add -D unsigned https://github.com/chris-huxtable/crystal-port/releases/download/0.24.1/crystal-0.24.1.tgz
+pkg_add -D unsigned https://github.com/chris-huxtable/crystal-port/releases/download/v0.24.1/crystal-0.24.1.tgz
 ```
 
 ## Setup:
