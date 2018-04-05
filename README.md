@@ -31,6 +31,15 @@ tar -cvf v0.24.2.tar v0.24.2.o
 gzip -9 v0.24.2.tar
 ```
 
+## Updating Port
+```
+make clean=all
+make makesum
+make
+make update-plist
+make package
+```
+
 ## Help:
 - [Manual for ports](https://man.openbsd.org/ports)
 - [Manual for bsd.port.mk](https://man.openbsd.org/bsd.port.mk)
