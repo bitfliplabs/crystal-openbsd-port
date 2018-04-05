@@ -2,7 +2,7 @@
 
 ONLY_FOR_ARCHS			 = amd64
 
-V						 = 0.24.1
+V						 = 0.24.2
 V_SHARDS				 = 0.7.2
 COMMENT					 = A Ruby-like, statically typed, object oriented, language.
 DISTNAME				 = crystal-${V}
@@ -18,27 +18,28 @@ WANTLIB					+= ${COMPILER_LIBCXX} c event_core event_extra gc iconv
 WANTLIB					+= m pcre yaml z
 
 MASTER_SITES			 = https://github.com/crystal-lang/crystal/archive/
-MASTER_SITES0			 = https://assets.bitfliplabs.com/crystal/archive/
+MASTER_SITES0			 = https://github.com/chris-huxtable/crystal-port/releases/download/v${V}/
 MASTER_SITES1			 = https://github.com/crystal-lang/shards/archive/
-DISTFILES				 = v${V}.tar.gz \
-						   v${V}-openbsd.tar.gz:0 \
+DISTFILES				 = ${V}.tar.gz \
+						   v${V}-object.tar.gz:0 \
 						   v${V_SHARDS}.tar.gz:1
 
 COMPILER				 = base-clang ports-clang
 
-NO_CONFIGURE			 = Yes
+BUILD_DEPENDS			 = devel/llvm \
+						   shells/bash
 
 LIB_DEPENDS				 = converters/libiconv \
 						   devel/boehm-gc \
 						   devel/libevent2 \
-						   devel/llvm \
 						   devel/pcre \
 						   devel/libyaml
 
-BUILD_DEPENDS			  = shells/bash
+RUN_DEPENDS				 = devel/llvm
 
 USE_GMAKE				 = Yes
 
+NO_CONFIGURE			 = Yes
 NO_TEST					 = Yes
 
 do-build:
@@ -47,7 +48,7 @@ do-build:
 	${CC} -c -o ${WRKSRC}/src/ext/sigfault.o ${WRKSRC}/src/ext/sigfault.c
 
 	mkdir -p ${WRKSRC}/.build
-	${CC} ${WRKSRC}/../v${V}-openbsd.o -o ${WRKBUILD}/.build/crystal -rdynamic \
+	${CC} ${WRKSRC}/../v${V}.o -o ${WRKBUILD}/.build/crystal -rdynamic \
 		${WRKSRC}/src/ext/sigfault.o \
 		${WRKSRC}/src/llvm/ext/llvm_ext.o \
 		`(llvm-config --libs --system-libs --ldflags 2> /dev/null)` \
