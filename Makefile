@@ -35,6 +35,8 @@ LIB_DEPENDS				 = converters/libiconv \
 						   devel/pcre \
 						   devel/libyaml
 
+BUILD_DEPENDS			  = shells/bash
+
 USE_GMAKE				 = Yes
 
 NO_TEST					 = Yes

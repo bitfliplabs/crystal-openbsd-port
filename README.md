@@ -17,7 +17,7 @@ cd crystal
 ## Dependencies:
 Easier and faster to add from ports then by compilation:
 ```
-pkg_add gmake libiconv boehm-gc libevent llvm pcre libyaml
+pkg_add gmake libiconv boehm-gc libevent llvm pcre libyaml bash
 ```
 
 ## Cross Compiling
