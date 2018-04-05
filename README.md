@@ -7,7 +7,7 @@ pkg_add -D unsigned https://github.com/chris-huxtable/crystal-port/releases/down
 ```
 
 ## Setup:
-On OpenBSD [with ports installed ](https://www.openbsd.org/faq/ports/ports.html#PortsFetch):
+On OpenBSD [with ports installed](https://www.openbsd.org/faq/ports/ports.html#PortsFetch):
 ```
 cd /usr/ports/lang
 git clone https://github.com/bitfliplabs/crystal-port.git crystal
