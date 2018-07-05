@@ -3,7 +3,7 @@ OpenBSD port of [crystal](https://github.com/crystal-lang/crystal); a Ruby-like,
 
 ## Pre-Built:
 ```
-pkg_add -D unsigned https://github.com/chris-huxtable/crystal-port/releases/download/v0.24.2/crystal-0.24.2.tgz
+pkg_add -D unsigned https://github.com/chris-huxtable/crystal-port/releases/download/v0.25.1/crystal-0.25.1.tgz
 ```
 
 ## Setup:
@@ -26,9 +26,9 @@ On MacOS/Linux:
 cd root/dir/of/crystal/
 make clean && make
 .build/crystal build --release --cross-compile --target "amd64-unknown-openbsd6.3" -D i_know_what_im_doing src/compiler/crystal.cr
-mv crystal.o v0.24.2.o
-tar -cvf v0.24.2.tar v0.24.2.o
-gzip -9 v0.24.2.tar
+mv crystal.o crystal-v0.25.1.o
+tar -cvf crystal-v0.25.1-object.tar crystal-v0.25.1.o
+gzip -9 crystal-v0.25.1-object.tar
 ```
 
 ## Updating Port
